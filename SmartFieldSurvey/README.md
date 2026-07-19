@@ -1,8 +1,86 @@
-# Welcome to your Expo app 👋
+# Smart Field Survey & Inspection App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A complete React Native application built with **Expo** and **Expo Router**, designed for field survey and inspection workflows. The app lets users create surveys, capture photos, record GPS locations, manage contacts, and copy/paste survey data — all from a clean mobile UI.
 
-## Get started
+> Student Project · Developer: **PRITESH**
+
+---
+
+## Tech Stack
+
+- **Expo SDK 54** with **Expo Router** (file-based routing)
+- **Navigation**: `expo-router/drawer` (outer Drawer) wrapping a `@react-navigation/bottom-tabs` navigator (nested Tabs)
+- **Expo APIs**: `expo-camera`, `expo-contacts`, `expo-location`, `expo-clipboard`
+- **Icons**: `@expo/vector-icons` (Ionicons — SVG-based)
+- **Safe Areas**: `react-native-safe-area-context`
+- **State**: React Context only (no Redux / Zustand)
+- **Language**: JavaScript
+
+---
+
+## Features (Modules)
+
+| Module | Screen | Highlights |
+|--------|--------|------------|
+| 1 | Dashboard | Custom header, student details, today's survey count, quick-action cards, recent survey summary |
+| 2 | New Survey | Site/Client/Description inputs, priority selector, date, required-field validation |
+| 3 | Camera | Permission request, capture, preview, capture time, retake, delete with confirmation |
+| 4 | Location | Permission request, latitude/longitude/accuracy, refresh, copy to clipboard |
+| 5 | Contacts | Permission request, fetch + search, counter, pull-to-refresh, avatar initials, copy number, "No Number" state |
+| 6 | Clipboard | Copy Survey ID / Contact Number / Location, paste notes, clear clipboard |
+| 7 | Survey Preview | Full survey detail (photo + URL, contact, location, notes), edit, submit |
+| 8 | History | FlatList of surveys, search, priority filter, delete with confirmation, read-only detail view |
+
+Plus a **Profile** tab (student details + skills) and a **Settings** drawer screen (version, developer, permissions used).
+
+---
+
+## Navigation
+
+**Bottom Tabs** (always visible): Dashboard · New Survey · History · Profile
+
+**Drawer menu**: Dashboard · Survey · Camera · Contacts · Location · Clipboard · Settings
+
+```
+app/
+  _layout.js              # Root Drawer
+  (tabs)/
+    _layout.js            # Bottom Tabs
+    index.js              # Dashboard (Module 1)
+    new-survey.js         # Create Survey (Module 2)
+    history.js            # Survey History (Module 8)
+    profile.js            # Profile
+  camera.js               # Module 3
+  contacts.js             # Module 5
+  location.js             # Module 4
+  clipboard.js            # Module 6
+  settings.js             # Settings
+  survey-preview.js       # Module 7
+```
+
+---
+
+## Project Structure
+
+```
+app/                 # Screens (file-based routing)
+components/          # Reusable UI
+  AppHeader.js         # Header with dynamic SVG icon
+  SurveyCard.js        # Survey summary card
+  QuickActionCard.js   # Colored quick-action tile
+  ContactItem.js       # Contact row with avatar
+  EmptyState.js        # Empty-state placeholder
+  PrimaryButton.js     # Button with optional SVG icon
+  SafeView.js          # Safe-area wrapper
+constants/
+  theme.js            # Student info + color palette
+  SurveyContext.js    # Shared survey state (Context)
+assets/               # Icons & splash
+```
+
+---
+
+## Getting Started
 
 1. Install dependencies
 
@@ -10,41 +88,41 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Start the development server
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. Open the app using:
+   - **Expo Go** on a physical device (camera/contacts/location need a real device)
+   - **Android emulator** or **iOS simulator**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+> For full native functionality (camera, contacts, GPS), use a development build or a physical device rather than Expo Go.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## Permissions Used
 
-When you're ready, run:
+The app requests the following at runtime:
 
-```bash
-npm run reset-project
-```
+- **Camera** — capture survey photos
+- **Location** — record GPS coordinates
+- **Contacts** — select client contacts
+- **Clipboard** — copy and paste survey data
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## Build Notes
 
-To learn more about developing your project with Expo, look at the following resources:
+- Written in **JavaScript** with beginner-friendly patterns (`useState`, `useEffect`, `StyleSheet`).
+- Survey data is held in a React Context (`constants/SurveyContext.js`) and stored in-memory during the session.
+- The Drawer is the outer layout; the Bottom Tabs navigator is nested inside the Dashboard drawer screen, following the `expo-router/drawer` pattern.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## Learn More
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Expo Documentation](https://docs.expo.dev/)
+- [Expo Router Guide](https://docs.expo.dev/router/introduction/)
+- [Expo Router Drawer](https://docs.expo.dev/router/advanced/drawer/)
